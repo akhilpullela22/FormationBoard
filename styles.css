@@ -76,14 +76,12 @@ h1 { margin:0; font-size:20px; }
 
 .zone {
   fill:rgba(255,77,77,0.25);
-  stroke:#ef476f;
   stroke-width:2;
   cursor:move;
 }
 
 .zone-label {
   font-size:12px;
-  fill:#ef476f;
   text-anchor:middle;
   dominant-baseline:middle;
   pointer-events:none;
