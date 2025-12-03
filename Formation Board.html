@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formation Board</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <h1>Formation Board</h1>
+</header>
+
+<div class="container">
+  <!-- Offensive palette -->
+  <aside class="sidebar offense">
+    <h2>Offense</h2>
+    <div class="palette">
+      <div class="player-template" draggable="true" data-type="offense" data-label="RB">RB</div>
+      <div class="player-template" draggable="true" data-type="offense" data-label="WR">WR</div>
+      <div class="player-template" draggable="true" data-type="offense" data-label="TE">TE</div>
+    </div>
+  </aside>
+
+  <!-- Board -->
+  <main id="board-wrap">
+    <svg id="board" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="1000" height="600" class="board-bg"></rect>
+      <g id="players-layer">
+        <!-- Default OL + QB -->
+        <circle cx="500" cy="500" r="15" class="player ol"/>
+        <text x="500" y="500" class="label">C</text>
+
+        <circle cx="470" cy="500" r="15" class="player ol"/>
+        <text x="470" y="500" class="label">LG</text>
+
+        <circle cx="440" cy="500" r="15" class="player ol"/>
+        <text x="440" y="500" class="label">LT</text>
+
+        <circle cx="530" cy="500" r="15" class="player ol"/>
+        <text x="530" y="500" class="label">RG</text>
+
+        <circle cx="560" cy="500" r="15" class="player ol"/>
+        <text x="560" y="500" class="label">RT</text>
+
+        <circle cx="500" cy="560" r="15" class="player qb"/>
+        <text x="500" y="560" class="label">QB</text>
+      </g>
+    </svg>
+
+
+  </main>
+
+  <!-- Defensive palette -->
+  <aside class="sidebar defense">
+    <h2>Defense</h2>
+    <div class="palette">
+      <div class="player-template" draggable="true" data-type="defense" data-label="CB">CB</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="S">S</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="LB">LB</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="DL">DL</div>
+    </div>
+    <h3>Zones</h3>
+    <div class="palette">
+      <div class="zone-template" draggable="true" data-label="Deep 1/2">Deep 1/2</div>
+      <div class="zone-template" draggable="true" data-label="Deep 1/3">Deep 1/3</div>
+      <div class="zone-template" draggable="true" data-label="Deep 1/4">Deep 1/4</div>
+      <div class="zone-template" draggable="true" data-label="Middle Zone">Middle Zone</div>
+      <div class="zone-template" draggable="true" data-label="Flat">Flat</div>
+      <div class="zone-template" draggable="true" data-label="Delay">Delay</div>
+      <div class="zone-template" draggable="true" data-label="Swing">Swing</div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const svg = document.getElementById('board');
+const playersLayer = document.getElementById('players-layer');
+
+// ------------------ PLAYER DRAG ------------------
+document.querySelectorAll('.player-template').forEach(el=>{
+  el.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('type', el.dataset.type);
+    e.dataTransfer.setData('label', el.dataset.label);
+  });
+});
+
+svg.addEventListener('dragover', e=> e.preventDefault());
+svg.addEventListener('drop', e=>{
+  const type = e.dataTransfer.getData('type');
+  const label = e.dataTransfer.getData('label');
+  const zoneLabel = e.dataTransfer.getData('zoneLabel');
+  const pt = svgPoint(e);
+
+
+  if(zoneLabel){
+    let size, color;
+    if(zoneLabel === "Deep 1/2"){
+      size = {rx:200, ry:100}; color="blue";
+    } else if(zoneLabel === "Deep 1/3"){
+      size = {rx:133.33, ry:66.67}; color="blue";
+    } else if(zoneLabel === "Deep 1/4"){
+      size = {rx:100, ry:50}; color="blue";
+    } else if(zoneLabel === "Middle Zone"){
+      size = {rx:60, ry:40}; color="yellow";
+    } else if(zoneLabel === "Flat"){
+      size = {rx:150, ry:50}; color="yellow";
+    } else {
+      size = {rx:60, ry:40}; color="yellow";
+    }
+    addZone(pt.x, pt.y, size.rx, size.ry, color);
+    return;
+  }
+
+  // If dropping a player
+  if(type && label){
+    addPlayer(pt.x, pt.y, type, label);
+  }
+});
+
+function addPlayer(x,y,type,label){
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','player-group');
+
+  const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  circle.setAttribute('cx',x);
+  circle.setAttribute('cy',y);
+  circle.setAttribute('r',15);
+  circle.setAttribute('class','player '+type);
+
+  const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+  text.setAttribute('x',x);
+  text.setAttribute('y',y);
+  text.setAttribute('class','label');
+  text.textContent = label;
+
+  g.appendChild(circle);
+  g.appendChild(text);
+  playersLayer.appendChild(g);
+
+  enablePlayerDrag(g,circle,text);
+}
+
+function enablePlayerDrag(group,circle,text){
+  let dragging=false;
+  group.addEventListener('mousedown',()=> dragging=true);
+  svg.addEventListener('mousemove',e=>{
+    if(!dragging) return;
+    const pt=svgPoint(e);
+    circle.setAttribute('cx',pt.x);
+    circle.setAttribute('cy',pt.y);
+    text.setAttribute('x',pt.x);
+    text.setAttribute('y',pt.y);
+  });
+  window.addEventListener('mouseup',()=> dragging=false);
+}
+
+// ------------------ ZONE DRAG ------------------
+document.querySelectorAll('.zone-template').forEach(el=>{
+  el.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('zoneLabel', el.dataset.label);
+  });
+});
+
+function addZone(x,y,rx,ry,color){
+  const ell = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+  ell.setAttribute('cx',x);
+  ell.setAttribute('cy',y);
+  ell.setAttribute('rx',rx);
+  ell.setAttribute('ry',ry);
+  ell.setAttribute('class','zone');
+  ell.setAttribute('fill',color);
+  ell.setAttribute('fill-opacity',0.25);
+  ell.setAttribute('stroke',color);
+  ell.setAttribute('stroke-width',2);
+  playersLayer.appendChild(ell);
+
+  enableZoneDragResize(ell);
+}
+
+function enableZoneDragResize(zone){
+  let dragging=false;
+  let resizing=false;
+
+  zone.addEventListener('mousedown', e=>{
+    if(e.shiftKey){
+      resizing=true;
+    } else {
+      dragging=true;
+    }
+  });
+
+  svg.addEventListener('mousemove', e=>{
+    const pt=svgPoint(e);
+    if(dragging){
+      zone.setAttribute('cx',pt.x);
+      zone.setAttribute('cy',pt.y);
+    }
+    if(resizing){
+      const dx=Math.abs(pt.x-zone.cx.baseVal.value);
+      const dy=Math.abs(pt.y-zone.cy.baseVal.value);
+      zone.setAttribute('rx',dx);
+      zone.setAttribute('ry',dy);
+    }
+  });
+
+  window.addEventListener('mouseup', ()=>{
+    dragging=false;
+    resizing=false;
+  });
+}
+
+function svgPoint(evt){
+  const pt=svg.createSVGPoint();
+  pt.x=evt.clientX;
+  pt.y=evt.clientY;
+  const ctm=svg.getScreenCTM().inverse();
+  const p=pt.matrixTransform(ctm);
+  return {x:p.x,y:p.y};
+}
+
+
+
+</script>
+
+</body>
+</html>
