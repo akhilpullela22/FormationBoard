@@ -68,40 +68,52 @@
   <aside class="sidebar offense">
     <h2>Offense</h2>
     <div class="palette">
-      <div class="player-template" draggable="true" data-type="offense" data-label="RB">RB</div>
+      <div class="player-template" draggable="true" data-type="offense" data-label="HB">HB</div>
       <div class="player-template" draggable="true" data-type="offense" data-label="WR">WR</div>
       <div class="player-template" draggable="true" data-type="offense" data-label="TE">TE</div>
+    </div>
+    <h3>Routes</h3>
+    <div class="palette">
+      <div class="route-template" draggable="true" data-label="Slant">Slant</div>
+      <div class="route-template" draggable="true" data-label="Comeback">Comeback</div>
+      <div class="route-template" draggable="true" data-label="Post">Post</div>
+      <div class="route-template" draggable="true" data-label="Corner">Corner</div>
+      <div class="route-template" draggable="true" data-label="Out">Out</div>
+      <div class="route-template" draggable="true" data-label="Curl">Curl</div>
+      <div class="route-template" draggable="true" data-label="Dig">Swing</div>
+      <div class="route-template" draggable="true" data-label="Go">Go</div>
+      <div class="route-template" draggable="true" data-label="Drag">Drag</div>
     </div>
   </aside>
 
   <!-- Board -->
   <main id="board-wrap">
     <svg id="board" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
-  <rect x="0" y="0" width="1000" height="600" class="board-bg"></rect>
+      <rect x="0" y="0" width="1000" height="600" class="board-bg"></rect>
 
-<line x1="330" y1="50" x2="350" y2="50" class="hash-mark"/>
-<line x1="330" y1="100" x2="350" y2="100" class="hash-mark"/>
-<line x1="330" y1="150" x2="350" y2="150" class="hash-mark"/>
-<line x1="330" y1="200" x2="350" y2="200" class="hash-mark"/>
-<line x1="330" y1="250" x2="350" y2="250" class="hash-mark"/>
-<line x1="330" y1="300" x2="350" y2="300" class="hash-mark"/>
-<line x1="330" y1="350" x2="350" y2="350" class="hash-mark"/>
-<line x1="330" y1="400" x2="350" y2="400" class="hash-mark"/>
-<line x1="330" y1="450" x2="350" y2="450" class="hash-mark"/>
-<line x1="330" y1="500" x2="350" y2="500" class="hash-mark"/>
-<line x1="330" y1="550" x2="350" y2="550" class="hash-mark"/>
+      <line x1="330" y1="50" x2="350" y2="50" class="hash-mark"/>
+      <line x1="330" y1="100" x2="350" y2="100" class="hash-mark"/>
+      <line x1="330" y1="150" x2="350" y2="150" class="hash-mark"/>
+      <line x1="330" y1="200" x2="350" y2="200" class="hash-mark"/>
+      <line x1="330" y1="250" x2="350" y2="250" class="hash-mark"/>
+      <line x1="330" y1="300" x2="350" y2="300" class="hash-mark"/>
+      <line x1="330" y1="350" x2="350" y2="350" class="hash-mark"/>
+      <line x1="330" y1="400" x2="350" y2="400" class="hash-mark"/>
+      <line x1="330" y1="450" x2="350" y2="450" class="hash-mark"/>
+      <line x1="330" y1="500" x2="350" y2="500" class="hash-mark"/>
+      <line x1="330" y1="550" x2="350" y2="550" class="hash-mark"/>
 
-<line x1="670" y1="50" x2="690" y2="50" class="hash-mark"/>
-<line x1="670" y1="100" x2="690" y2="100" class="hash-mark"/>
-<line x1="670" y1="150" x2="690" y2="150" class="hash-mark"/>
-<line x1="670" y1="200" x2="690" y2="200" class="hash-mark"/>
-<line x1="670" y1="250" x2="690" y2="250" class="hash-mark"/>
-<line x1="670" y1="300" x2="690" y2="300" class="hash-mark"/>
-<line x1="670" y1="350" x2="690" y2="350" class="hash-mark"/>
-<line x1="670" y1="400" x2="690" y2="400" class="hash-mark"/>
-<line x1="670" y1="450" x2="690" y2="450" class="hash-mark"/>
-<line x1="670" y1="500" x2="690" y2="500" class="hash-mark"/>
-<line x1="670" y1="550" x2="690" y2="550" class="hash-mark"/>
+      <line x1="670" y1="50" x2="690" y2="50" class="hash-mark"/>
+      <line x1="670" y1="100" x2="690" y2="100" class="hash-mark"/>
+      <line x1="670" y1="150" x2="690" y2="150" class="hash-mark"/>
+      <line x1="670" y1="200" x2="690" y2="200" class="hash-mark"/>
+      <line x1="670" y1="250" x2="690" y2="250" class="hash-mark"/>
+      <line x1="670" y1="300" x2="690" y2="300" class="hash-mark"/>
+      <line x1="670" y1="350" x2="690" y2="350" class="hash-mark"/>
+      <line x1="670" y1="400" x2="690" y2="400" class="hash-mark"/>
+      <line x1="670" y1="450" x2="690" y2="450" class="hash-mark"/>
+      <line x1="670" y1="500" x2="690" y2="500" class="hash-mark"/>
+      <line x1="670" y1="550" x2="690" y2="550" class="hash-mark"/>
 
 
   <g id="players-layer">
@@ -125,9 +137,11 @@
     <text x="510" y="560" class="label">QB</text>
   </g>
 </svg>
+  <button id="reset-btn">Reset Board</button>
+  <button id="draw-btn">Draw Pen</button>
 
   </main>
-
+  
   <!-- Defensive palette -->
   <aside class="sidebar defense">
     <h2>Defense</h2>
@@ -295,6 +309,24 @@ function svgPoint(evt){
   return {x:p.x,y:p.y};
 }
 
+document.getElementById('reset-btn').addEventListener('click', () => {
+  // Remove all children from players-layer
+  while (playersLayer.firstChild) {
+    playersLayer.removeChild(playersLayer.firstChild);
+  }
+
+  // Re-add default OL + QB
+  const defaults = [
+    {x:500, y:500, label:"C", type:"ol"},
+    {x:470, y:500, label:"LG", type:"ol"},
+    {x:440, y:500, label:"LT", type:"ol"},
+    {x:530, y:500, label:"RG", type:"ol"},
+    {x:560, y:500, label:"RT", type:"ol"},
+    {x:500, y:560, label:"QB", type:"qb"}
+  ];
+
+  defaults.forEach(p => addPlayer(p.x, p.y, p.type, p.label));
+});
 
 
 </script>
