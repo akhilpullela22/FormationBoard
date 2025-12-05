@@ -1,2 +1,2 @@
 # CoachDB
-Creating an interactive whiteball for football
+Creating an interactive whiteboard for football
