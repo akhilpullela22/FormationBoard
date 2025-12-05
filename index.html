@@ -203,15 +203,15 @@ svg.addEventListener('drop', e=>{
   if(zoneLabel){
     let size, color;
     if(zoneLabel === "Deep 1/2"){
-      size = {rx:225, ry:150}; color="blue";
+      size = {rx:225, ry:100}; color="blue";
     } else if(zoneLabel === "Deep 1/3"){
-      size = {rx:183.33, ry:83.33}; color="blue";
+      size = {rx:160, ry:83.33}; color="blue";
     } else if(zoneLabel === "Deep 1/4"){
       size = {rx:112.5, ry:75}; color="blue";
     } else if(zoneLabel === "Middle Zone"){
       size = {rx:90, ry:70}; color="yellow";
     } else if(zoneLabel === "Flat"){
-      size = {rx:150, ry:50}; color="yellow";
+      size = {rx:135, ry:50}; color="yellow";
     } else {
       size = {rx:60, ry:40}; color="yellow";
     }
@@ -255,6 +255,7 @@ function enablePlayerDrag(group,circle,text){
   let dragging=false;
   group.addEventListener('mousedown',()=>{
     drawBtn.textContent = "Draw Pen";
+    if (drawMode) return;
     dragging=true;
     isDragging = true;
   });
@@ -302,6 +303,7 @@ function enableZoneDragResize(zone){
   let resizing=false;
 
   zone.addEventListener('mousedown', e=>{
+    if (drawMode) return;
     if(e.shiftKey){
       resizing=true;
     } else {
