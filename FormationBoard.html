@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formation Board</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin:0;
+      font-family:system-ui,sans-serif;
+      background:#0f172a;
+      color:#eee;
+    }
+    header {
+      padding:12px;
+      background:#111827;
+      border-bottom:1px solid #1f2937;
+    }
+    h1 { margin:0; font-size:20px; }
+    .container {
+      display:grid;
+      grid-template-columns:200px 1fr 200px;
+      gap:12px;
+      padding:12px;
+    }
+    .sidebar {
+      background:#111827;
+      border:1px solid #1f2937;
+      border-radius:8px;
+      padding:10px;
+    }
+    .palette { display:flex; flex-direction:column; gap:8px; }
+    .player-template, .zone-template {
+      background:#1f2937; color:#e5e7eb; border:1px solid #374151;
+      padding:8px; border-radius:6px; cursor:grab; text-align:center;
+    }
+    #board {
+      width:100%; height:600px;
+      border:2px solid #fff; border-radius:8px;
+    }
+    .board-bg { fill:#1f6b3b; }
+    .player { stroke:#fff; stroke-width:2; }
+    .ol { fill:#073b4c; }
+    .qb { fill:#ffd166; }
+    .label {
+      font-size:12px;
+      fill:#fff;
+      text-anchor:middle;
+      dominant-baseline:middle;
+      paint-order:stroke;
+      stroke:rgba(0,0,0,0.5);
+      stroke-width:2px;
+    }
+    .hash-mark {
+      stroke:white;
+      stroke-width:2;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Formation Board</h1>
+</header>
+
+<div class="container">
+  <!-- Offensive palette -->
+  <aside class="sidebar offense">
+    <h2>Offense</h2>
+    <div class="palette">
+      <div class="player-template" draggable="true" data-type="offense" data-label="HB">HB</div>
+      <div class="player-template" draggable="true" data-type="offense" data-label="WR">WR</div>
+      <div class="player-template" draggable="true" data-type="offense" data-label="TE">TE</div>
+    </div>
+  </aside>
+
+  <!-- Board -->
+  <main id="board-wrap">
+    <svg id="board" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg" style="height:700px;">
+      <rect x="0" y="0" width="1000" height="700" class="board-bg"></rect>
+      <line x1="330" y1="40" x2="350" y2="40" class="hash-mark"/>
+      <line x1="330" y1="80" x2="350" y2="80" class="hash-mark"/>
+      <line x1="330" y1="120" x2="350" y2="120" class="hash-mark"/>
+      <line x1="330" y1="160" x2="350" y2="160" class="hash-mark"/>
+      <line x1="330" y1="200" x2="350" y2="200" class="hash-mark"/>
+      <line x1="330" y1="240" x2="350" y2="240" class="hash-mark"/>
+      <line x1="330" y1="280" x2="350" y2="280" class="hash-mark"/>
+      <line x1="330" y1="320" x2="350" y2="320" class="hash-mark"/>
+      <line x1="330" y1="360" x2="350" y2="360" class="hash-mark"/>
+      <line x1="330" y1="400" x2="350" y2="400" class="hash-mark"/>
+      <line x1="330" y1="440" x2="350" y2="440" class="hash-mark"/>
+      <line x1="330" y1="480" x2="350" y2="480" class="hash-mark"/>
+      <line x1="330" y1="520" x2="350" y2="520" class="hash-mark"/>
+      <line x1="330" y1="560" x2="350" y2="560" class="hash-mark"/>
+      <line x1="330" y1="600" x2="350" y2="600" class="hash-mark"/>
+      <line x1="330" y1="640" x2="350" y2="640" class="hash-mark"/>
+      <line x1="330" y1="680" x2="350" y2="680" class="hash-mark"/>
+      <line x1="330" y1="720" x2="350" y2="720" class="hash-mark"/>
+      <line x1="330" y1="760" x2="350" y2="760" class="hash-mark"/>
+      <line x1="670" y1="40" x2="690" y2="40" class="hash-mark"/>
+      <line x1="670" y1="80" x2="690" y2="80" class="hash-mark"/>
+      <line x1="670" y1="120" x2="690" y2="120" class="hash-mark"/>
+      <line x1="670" y1="160" x2="690" y2="160" class="hash-mark"/>
+      <line x1="670" y1="200" x2="690" y2="200" class="hash-mark"/>
+      <line x1="670" y1="240" x2="690" y2="240" class="hash-mark"/>
+      <line x1="670" y1="280" x2="690" y2="280" class="hash-mark"/>
+      <line x1="670" y1="320" x2="690" y2="320" class="hash-mark"/>
+      <line x1="670" y1="360" x2="690" y2="360" class="hash-mark"/>
+      <line x1="670" y1="400" x2="690" y2="400" class="hash-mark"/>
+      <line x1="670" y1="440" x2="690" y2="440" class="hash-mark"/>
+      <line x1="670" y1="480" x2="690" y2="480" class="hash-mark"/>
+      <line x1="670" y1="520" x2="690" y2="520" class="hash-mark"/>
+      <line x1="670" y1="560" x2="690" y2="560" class="hash-mark"/>
+      <line x1="670" y1="600" x2="690" y2="600" class="hash-mark"/>
+      <line x1="670" y1="640" x2="690" y2="640" class="hash-mark"/>
+      <line x1="670" y1="680" x2="690" y2="680" class="hash-mark"/>
+      <line x1="670" y1="720" x2="690" y2="720" class="hash-mark"/>
+      <line x1="670" y1="760" x2="690" y2="760" class="hash-mark"/>
+  
+
+      <line x1="0" y1="20" x2="1000" y2="20" stroke="white" stroke-width="3"/>
+      <line x1="0" y1="180" x2="1000" y2="180" stroke="white" stroke-width="3"/>
+      <line x1="0" y1="340" x2="1000" y2="340" stroke="white" stroke-width="3"/>
+      <line x1="0" y1="500" x2="1000" y2="500" stroke="white" stroke-width="3"/>
+      <line x1="0" y1="660" x2="1000" y2="660" stroke="white" stroke-width="3"/>
+  
+      
+
+  <g id="pen-layer"></g>
+
+
+
+  <g id="players-layer">
+    <circle cx="510" cy="530" r="22" class="player ol"/>
+    <text x="510" y="530" class="label">C</text>
+
+    <circle cx="460" cy="530" r="22" class="player ol"/>
+    <text x="460" y="530" class="label">LG</text>
+
+    <circle cx="410" cy="530" r="22" class="player ol"/>
+    <text x="410" y="530" class="label">LT</text>
+
+    <circle cx="560" cy="530" r="22" class="player ol"/>
+    <text x="560" y="530" class="label">RG</text>
+
+    <circle cx="610" cy="530" r="22" class="player ol"/>
+    <text x="610" y="530" class="label">RT</text>
+
+    <circle cx="510" cy="600" r="22" class="player qb"/>
+    <text x="510" y="600" class="label">QB</text>
+
+  </g>
+</svg>
+  <button id="reset-btn"class="base-btn">Reset Board</button>
+  <button id="draw-btn"class="base-btn">Draw Pen</button>
+  <button id="clear-btn"class="base-btn">Reset Pen</button>
+  <button id="erase-btn"class="base-btn">Erase</button>
+  </main>
+  
+  <!-- Defensive palette -->
+  <aside class="sidebar defense">
+    <h2>Defense</h2>
+    <div class="palette">
+      <div class="player-template" draggable="true" data-type="defense" data-label="CB">CB</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="S">S</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="LB">LB</div>
+      <div class="player-template" draggable="true" data-type="defense" data-label="DL">DL</div>
+    </div>
+    <h3>Zones</h3>
+    <div class="palette">
+      <div class="zone-template" draggable="true" data-label="Deep 1/2">Deep 1/2</div>
+      <div class="zone-template" draggable="true" data-label="Deep 1/3">Deep 1/3</div>
+      <div class="zone-template" draggable="true" data-label="Deep 1/4">Deep 1/4</div>
+      <div class="zone-template" draggable="true" data-label="Middle Zone">Middle Zone</div>
+      <div class="zone-template" draggable="true" data-label="Flat">Flat</div>
+    </div>
+    <h4>Base</h4>
+    <button id="34-btn" class="base-btn">3-4</button>
+    <button id="43-btn" class="base-btn">4-3</button>
+  </aside>
+</div>
+
+<script>
+const svg = document.getElementById('board');
+const playersLayer = document.getElementById('players-layer');
+let isDragging = false
+
+document.querySelectorAll('.player-template').forEach(el=>{
+  el.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('type', el.dataset.type);
+    e.dataTransfer.setData('label', el.dataset.label);
+  });
+});
+
+svg.addEventListener('dragover', e=> e.preventDefault());
+svg.addEventListener('drop', e=>{
+  const type = e.dataTransfer.getData('type');
+  const label = e.dataTransfer.getData('label');
+  const zoneLabel = e.dataTransfer.getData('zoneLabel');
+  const pt = svgPoint(e);
+
+
+  if(zoneLabel){
+    let size, color;
+    if(zoneLabel === "Deep 1/2"){
+      size = {rx:225, ry:150}; color="blue";
+    } else if(zoneLabel === "Deep 1/3"){
+      size = {rx:183.33, ry:83.33}; color="blue";
+    } else if(zoneLabel === "Deep 1/4"){
+      size = {rx:112.5, ry:75}; color="blue";
+    } else if(zoneLabel === "Middle Zone"){
+      size = {rx:90, ry:70}; color="yellow";
+    } else if(zoneLabel === "Flat"){
+      size = {rx:150, ry:50}; color="yellow";
+    } else {
+      size = {rx:60, ry:40}; color="yellow";
+    }
+    addZone(pt.x, pt.y, size.rx, size.ry, color);
+    return;
+  }
+
+
+  if(type && label){
+    addPlayer(pt.x, pt.y, type, label);
+  }
+});
+
+function addPlayer(x,y,type,label){
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','player-group');
+
+  const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  circle.setAttribute('cx',x);
+  circle.setAttribute('cy',y);
+  circle.setAttribute('r',22);
+  circle.setAttribute('class','player '+type);
+
+  const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+  text.setAttribute('x',x);
+  text.setAttribute('y',y);
+  text.setAttribute('class','label');
+  text.textContent = label;
+
+  g.appendChild(circle);
+  g.appendChild(text);
+  playersLayer.appendChild(g);
+
+  enablePlayerDrag(g,circle,text);
+  g.addEventListener('dblclick', () => {
+    g.remove();
+  });
+}
+
+function enablePlayerDrag(group,circle,text){
+  let dragging=false;
+  group.addEventListener('mousedown',()=>{
+    drawBtn.textContent = "Draw Pen";
+    dragging=true;
+    isDragging = true;
+  });
+  svg.addEventListener('mousemove',e=>{
+    if(!dragging) return;
+    const pt=svgPoint(e);
+    circle.setAttribute('cx',pt.x);
+    circle.setAttribute('cy',pt.y);
+    text.setAttribute('x',pt.x);
+    text.setAttribute('y',pt.y);
+  });
+  window.addEventListener('mouseup',()=>{
+    dragging=false;
+    isDragging = false;
+  });
+}
+
+document.querySelectorAll('.zone-template').forEach(el=>{
+  el.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('zoneLabel', el.dataset.label);
+  });
+});
+
+function addZone(x,y,rx,ry,color){
+  const ell = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+  ell.setAttribute('cx',x);
+  ell.setAttribute('cy',y);
+  ell.setAttribute('rx',rx);
+  ell.setAttribute('ry',ry);
+  ell.setAttribute('class','zone');
+  ell.setAttribute('fill',color);
+  ell.setAttribute('fill-opacity',0.25);
+  ell.setAttribute('stroke',color);
+  ell.setAttribute('stroke-width',2);
+  playersLayer.appendChild(ell);
+
+  enableZoneDragResize(ell);
+  ell.addEventListener('dblclick', () => {
+    ell.remove();
+  });
+}
+
+function enableZoneDragResize(zone){
+  let dragging=false;
+  let resizing=false;
+
+  zone.addEventListener('mousedown', e=>{
+    if(e.shiftKey){
+      resizing=true;
+    } else {
+      dragging=true;
+    }
+    isDragging = true;
+  });
+
+  svg.addEventListener('mousemove', e=>{
+    const pt=svgPoint(e);
+    if(dragging){
+      zone.setAttribute('cx',pt.x);
+      zone.setAttribute('cy',pt.y);
+    }
+    if(resizing){
+      const dx=Math.abs(pt.x-zone.cx.baseVal.value);
+      const dy=Math.abs(pt.y-zone.cy.baseVal.value);
+      zone.setAttribute('rx',dx);
+      zone.setAttribute('ry',dy);
+    }
+  });
+
+  window.addEventListener('mouseup', ()=>{
+    dragging=false;
+    resizing=false;
+    isDragging=false;
+  });
+}
+
+function svgPoint(evt){
+  const pt=svg.createSVGPoint();
+  pt.x=evt.clientX;
+  pt.y=evt.clientY;
+  const ctm=svg.getScreenCTM().inverse();
+  const p=pt.matrixTransform(ctm);
+  return {x:p.x,y:p.y};
+}
+document.getElementById('clear-btn').addEventListener('click', () => {
+  while (penLayer.firstChild) {
+    penLayer.removeChild(penLayer.firstChild);
+  }
+});
+
+const penLayer = document.getElementById('pen-layer');
+document.getElementById('reset-btn').addEventListener('click', () => {
+  clicked34 = false;
+  clicked43 = false;
+  while (playersLayer.firstChild) {
+    playersLayer.removeChild(playersLayer.firstChild);
+  }
+
+  while (penLayer.firstChild) {
+    penLayer.removeChild(penLayer.firstChild);
+  }
+  const defaults = [
+  {x:510, y:530, label:"C", type:"ol"},
+  {x:460, y:530, label:"LG", type:"ol"},
+  {x:410, y:530, label:"LT", type:"ol"},
+  {x:560, y:530, label:"RG", type:"ol"},
+  {x:610, y:530, label:"RT", type:"ol"},
+  {x:510, y:600, label:"QB", type:"qb"}
+];
+
+
+  defaults.forEach(p => addPlayer(p.x, p.y, p.type, p.label));
+}
+);
+const drawBtn = document.getElementById('draw-btn');
+
+let drawMode = false;
+let drawing = false;
+let currentPath = null;
+let clicked34 = false;
+let clicked43 = false;
+document.getElementById('34-btn').addEventListener('click', ()=>{
+  if (!clicked34 && !clicked43 ){
+    clicked34 = true;
+    //down linemen
+    addPlayer(510, 470, "defense", "DL");
+    addPlayer(435, 470, "defense", "DL");
+    addPlayer(585, 470, "defense", "DL");
+    //mike will
+    addPlayer(472.5, 370, "defense", "LB");
+    addPlayer(547.5, 370, "defense", "LB");
+    //edge players
+    addPlayer(355, 420, "defense", "LB");
+    addPlayer(665, 420, "defense", "LB");
+  }
+});
+document.getElementById('43-btn').addEventListener('click', ()=>{
+  if (!clicked34 && !clicked43){
+    clicked43 = true;
+    //down linemen
+    addPlayer(475, 470, "defense", "DL");
+    addPlayer(585, 470, "defense", "DL");
+    //mike will sam
+    addPlayer(437.5, 370, "defense", "LB");
+    addPlayer(530, 370, "defense", "LB");
+    addPlayer(602.5, 370, "defense", "LB");
+    //edge players
+    addPlayer(370, 470, "defense", "DL");
+    addPlayer(650, 470, "defense", "DL");
+  }
+});
+drawBtn.addEventListener('click', () => {
+  drawMode = !drawMode;
+  drawBtn.textContent = drawMode ? "Stop Drawing" : "Draw Pen";
+});
+
+
+function getPoint(evt) {
+  if (evt.touches && evt.touches.length > 0) {
+    const touch = evt.touches[0];
+    return svgPoint(touch);
+  } else {
+    return svgPoint(evt);
+  }
+}
+
+svg.addEventListener('mousedown', e => {
+  if (!drawMode || isDragging) return;
+  drawing = true;
+  const pt = svgPoint(e);
+  startPath(pt);
+});
+
+svg.addEventListener('mousemove', e => {
+  if (!drawing || !drawMode || isDragging) return;
+  const pt = svgPoint(e);
+  extendPath(pt);
+});
+
+window.addEventListener('mouseup', () => {
+  drawing = false;
+});
+
+
+svg.addEventListener('touchstart', e => {
+  if (!drawMode || isDragging);
+  drawing = true;
+  const pt = getPoint(e);
+  startPath(pt);
+  e.preventDefault();
+});
+
+svg.addEventListener('touchmove', e => {
+  if (!drawing || !drawMode || isDragging) return;
+  const pt = getPoint(e);
+  extendPath(pt);
+  e.preventDefault();
+});
+
+window.addEventListener('touchend', () => {
+  drawing = false;
+});
+
+function startPath(pt) {
+  currentPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+  currentPath.setAttribute('d', `M${pt.x},${pt.y}`);
+  currentPath.setAttribute('stroke', 'black');
+  currentPath.setAttribute('stroke-width', 3);
+  currentPath.setAttribute('fill', 'none');
+  penLayer.appendChild(currentPath);
+}
+
+function extendPath(pt) {
+  let d = currentPath.getAttribute('d');
+  d += ` L${pt.x},${pt.y}`;
+  currentPath.setAttribute('d', d);
+}
+
+function svgPoint(evt){
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX;
+  pt.y = evt.clientY;
+  const ctm = svg.getScreenCTM().inverse();
+  const p = pt.matrixTransform(ctm);
+  return {x:p.x,y:p.y};
+}
+
+const eraseBtn = document.getElementById('erase-btn');
+let eraseMode = false;
+
+eraseBtn.addEventListener('click', () => {
+  if (drawMode) {
+    drawMode = false;
+    drawBtn.textContent = "Draw Pen";
+  }
+  eraseMode = !eraseMode;
+  eraseBtn.textContent = eraseMode ? "Stop Erasing" : "Erase";
+});
+
+svg.addEventListener('mousemove', e => {
+  if (!eraseMode) return;
+  const pt = svgPoint(e);
+
+  [...penLayer.querySelectorAll('path')].forEach(path => {
+    const length = path.getTotalLength();
+    for (let i = 0; i <= length; i += 5) {
+      const pos = path.getPointAtLength(i);
+      const dx = pos.x - pt.x;
+      const dy = pos.y - pt.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 10) {
+        path.remove();
+        return;
+      }
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
