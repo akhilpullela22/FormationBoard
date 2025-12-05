@@ -410,8 +410,16 @@ document.getElementById('43-btn').addEventListener('click', ()=>{
 });
 drawBtn.addEventListener('click', () => {
   drawMode = !drawMode;
+  eraseMode = false;
   drawBtn.textContent = drawMode ? "Stop Drawing" : "Draw Pen";
+  eraseBtn.textContent = "Erase";
+  if (drawMode) {
+    svg.classList.add('drawing-mode');
+  } else {
+    svg.classList.remove('drawing-mode');
+  }
 });
+
 
 
 function getPoint(evt) {

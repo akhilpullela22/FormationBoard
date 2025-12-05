@@ -45,8 +45,8 @@ h1 { margin:0; font-size:20px; }
   height: 800px;
   border: 2px solid #fff;
   border-radius: 8px;
+  user-select: none;
 }
-
 .board-bg { fill:var(--board-green); }
 
 .player { stroke:#fff; stroke-width:2; }
@@ -117,5 +117,8 @@ h1 { margin:0; font-size:20px; }
 
 .base-btn:hover {
   background:#374151;
+}
+.drawing-mode {
+  cursor: crosshair;   /* or pointer, cell, grab, etc. */
 }
 
