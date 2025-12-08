@@ -119,6 +119,58 @@ h1 { margin:0; font-size:20px; }
   background:#374151;
 }
 .drawing-mode {
-  cursor: crosshair;   /* or pointer, cell, grab, etc. */
+  cursor: crosshair;
+}
+#controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.left-controls .base-btn {
+  margin-right: 8px;
+}
+
+.right-controls .base-btn {
+  margin-left: 8px;
+}
+#help-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* dim background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#help-box {
+  background: #273449;
+  border: 2px solid #333;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 400px;
+}
+.close-btn {
+  width: 30px;              
+  height: 30px;
+  line-height: 30px;        
+  text-align: center;       
+  font-weight: bold;
+  font-size: 18px;
+  border: 1px solid #333;
+  border-radius: 4px;       
+  background: #ccc;
+  color: #333;
+  cursor: pointer;
+  float: right; 
+}
+
+.close-btn:hover {
+  background: #ccc;      
 }
 

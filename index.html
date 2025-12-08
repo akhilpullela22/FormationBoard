@@ -64,7 +64,7 @@
 </header>
 
 <div class="container">
-  <!-- Offensive palette -->
+  <!-- Offensive Players-->
   <aside class="sidebar offense">
     <h2>Offense</h2>
     <div class="palette">
@@ -151,13 +151,33 @@
 
   </g>
 </svg>
-  <button id="reset-btn"class="base-btn">Reset Board</button>
-  <button id="draw-btn"class="base-btn">Draw Pen</button>
-  <button id="clear-btn"class="base-btn">Reset Pen</button>
-  <button id="erase-btn"class="base-btn">Erase</button>
+  <div id="controls">
+  <div class="left-controls">
+    <button class="base-btn" id="reset-btn">Reset</button>
+    <button class="base-btn" id="draw-btn">Draw Pen</button>
+    <button class="base-btn" id="erase-btn">Erase</button>
+  </div>
+  <div class="right-controls">
+    <button class="base-btn" id="help-btn">Help</button>
+  </div>
+</div>
+<div id="help-overlay" style="display:none;">
+  <div id="help-box">
+    <button id="close-help"class="close-btn">X</button>
+    <h3>How to use the board</h3>
+    <ul>
+      <li>Click <strong>Draw Pen</strong> to sketch routes.</li>
+      <li>Click <strong>Erase</strong> to remove pen strokes.</li>
+      <li>Drag players/zones when not drawing.</li>
+      <li>Use the buttons to toggle modes.</li>
+    </ul>
+  </div>
+</div>
+
+
   </main>
   
-  <!-- Defensive palette -->
+  <!-- Defensive Players -->
   <aside class="sidebar defense">
     <h2>Defense</h2>
     <div class="palette">
@@ -181,6 +201,22 @@
 </div>
 
 <script>
+const helpBtn = document.getElementById('help-btn');
+const helpOverlay = document.getElementById('help-overlay');
+const closeHelp = document.getElementById('close-help');
+helpBtn.addEventListener('click', () => {
+  helpOverlay.style.display = "flex";
+});
+closeHelp.addEventListener('click', () => {
+  helpOverlay.style.display = "none";
+});
+
+helpOverlay.addEventListener('click', (e) => {
+  if (e.target === helpOverlay) {
+    helpOverlay.style.display = "none";
+  }
+});
+
 const svg = document.getElementById('board');
 const playersLayer = document.getElementById('players-layer');
 let isDragging = false
@@ -419,7 +455,6 @@ drawBtn.addEventListener('click', () => {
     svg.classList.remove('drawing-mode');
   }
 });
-
 
 
 function getPoint(evt) {
